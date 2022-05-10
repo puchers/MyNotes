@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.mynotes.data.Note
 import com.example.mynotes.databinding.FragmentAddNoteBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class AddNoteFragment : Fragment() {
 
@@ -22,7 +23,7 @@ class AddNoteFragment : Fragment() {
                 .noteDao()
         )
     }
-    private val navigationArgs: NoteDetailFragmentArgs by navArgs()
+    private val navigationArgs: AddNoteFragmentArgs by navArgs()
 
     lateinit var note: Note
 
@@ -37,7 +38,6 @@ class AddNoteFragment : Fragment() {
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
@@ -78,6 +78,23 @@ class AddNoteFragment : Fragment() {
             val action = AddNoteFragmentDirections.actionAddNoteFragmentToNoteListFragment()
             findNavController().navigate(action)
         }
+    }
+
+    fun showConfirmationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(android.R.string.dialog_alert_title))
+            .setMessage(getString(R.string.delete_question))
+            .setCancelable(false)
+            .setNegativeButton(getString(R.string.no)) { _, _ -> }
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                deleteNote()
+            }
+            .show()
+    }
+
+    private fun deleteNote() {
+        viewModel.deleteItem(note)
+//        findNavController().navigateUp()
     }
 
 

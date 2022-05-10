@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mynotes.data.Note
 import com.example.mynotes.databinding.NoteListFragmentBinding
 
 
@@ -19,11 +20,7 @@ class NoteListFragment : Fragment(), SearchView.OnQueryTextListener {
         )
     }
 
-    private val adapter = NoteListAdapter {
-        val action =
-            NoteListFragmentDirections.actionNoteListFragmentToNoteDetailFragment(it.id)
-        this.findNavController().navigate(action)
-    }
+    lateinit var adapter: NoteListAdapter
 
     private var _binding: NoteListFragmentBinding? = null
     private val binding get() = _binding!!
@@ -40,11 +37,11 @@ class NoteListFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val adapter = NoteListAdapter {
-//            val action =
-//                NoteListFragmentDirections.actionNoteListFragmentToNoteDetailFragment(it.id)
-//            this.findNavController().navigate(action)
-//        }
+        adapter = NoteListAdapter {
+            val action =
+                NoteListFragmentDirections.actionNoteListFragmentToAddNoteFragment(it.id)
+            this.findNavController().navigate(action)
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerView.adapter = adapter
         // Attach an observer on the allItems list to update the UI automatically when the data
@@ -56,9 +53,8 @@ class NoteListFragment : Fragment(), SearchView.OnQueryTextListener {
         }
 
         binding.floatingActionButton.setOnClickListener {
-            val action = NoteListFragmentDirections.actionNoteListFragmentToAddNoteFragment(
-                getString(R.string.add_fragment_title)
-            )
+            val action = NoteListFragmentDirections.actionNoteListFragmentToAddNoteFragment(-1)
+
             this.findNavController().navigate(action)
         }
 
