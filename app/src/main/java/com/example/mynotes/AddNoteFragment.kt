@@ -2,9 +2,7 @@ package com.example.mynotes
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -30,6 +28,11 @@ class AddNoteFragment : Fragment() {
     private var _binding: FragmentAddNoteBinding? = null
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +40,30 @@ class AddNoteFragment : Fragment() {
     ): View? {
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.delete_note -> {
+                showConfirmationDialog()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val id = navigationArgs.noteId
+        val menuItem = menu.findItem(R.id.delete_note)
+        if (id == -1) {
+            menuItem.isVisible = false
+        }
     }
 
     private fun isEntryValid(): Boolean {
@@ -80,7 +107,7 @@ class AddNoteFragment : Fragment() {
         }
     }
 
-    fun showConfirmationDialog() {
+    private fun showConfirmationDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(android.R.string.dialog_alert_title))
             .setMessage(getString(R.string.delete_question))
@@ -94,7 +121,7 @@ class AddNoteFragment : Fragment() {
 
     private fun deleteNote() {
         viewModel.deleteItem(note)
-//        findNavController().navigateUp()
+        findNavController().navigateUp()
     }
 
 
@@ -113,7 +140,6 @@ class AddNoteFragment : Fragment() {
             }
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
