@@ -36,11 +36,11 @@ class NoteListFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = NoteListAdapter {
+        adapter = NoteListAdapter ({
             val action =
                 NoteListFragmentDirections.actionNoteListFragmentToAddNoteFragment(it.id)
             this.findNavController().navigate(action)
-        }
+        }, viewModel.searchQuery)
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerView.adapter = adapter
         // Attach an observer on the allItems list to update the UI automatically when the data
@@ -63,24 +63,33 @@ class NoteListFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if(query != null) {
+        if(query != null && query.isNotBlank()) {
             searchDatabase(query)
-        }
+        } else updateAdapter(query)
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if(query != null) {
+        if(query != null && query.isNotBlank()) {
             searchDatabase(query)
-        }
+        } else updateAdapter(query)
         return true
     }
 
 
     private fun searchDatabase(query: String) {
         val searchQuery = "%$query%"
+        viewModel.searchQuery.value = query
 
         viewModel.searchDatabase(searchQuery).observe(this.viewLifecycleOwner) { notes ->
+            notes.let {
+                adapter.submitList(it)
+            }
+        }
+    }
+    private fun updateAdapter(query: String?) {
+        viewModel.searchQuery.value = query
+        viewModel.allNotes.observe(this.viewLifecycleOwner) { notes ->
             notes.let {
                 adapter.submitList(it)
             }

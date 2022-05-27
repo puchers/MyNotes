@@ -9,6 +9,9 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
 
 
     val allNotes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
+    val searchQuery: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
 
     fun updateNote(

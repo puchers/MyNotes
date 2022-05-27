@@ -14,24 +14,29 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@null"
+        android:fontFamily="@font/roboto_black"
         android:hint="@string/note_title_req"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:ems="10"
-        android:inputType="text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/note_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@null"
+        android:fontFamily="@font/roboto"
         android:hint="@string/add_fragment_title"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/note_title"
-        android:ems="10"
-        android:inputType="textMultiLine" />
+        app:layout_constraintTop_toBottomOf="@id/note_title" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/save_action"

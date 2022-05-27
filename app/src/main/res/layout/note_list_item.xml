@@ -18,30 +18,30 @@
         android:padding="12dp"
         android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/note_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="1000dp"
-        android:gravity="start"
-        android:clickable="false"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:paddingBottom="4dp"
-        tools:text="Notes" />
+        <TextView
+            android:id="@+id/note_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:fontFamily="@font/roboto_black"
+            android:gravity="start"
+            android:minWidth="1000dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            tools:text="Notes" />
 
-    <TextView
-        android:id="@+id/note_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="1000dp"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="start"
-        android:maxLines="4"
-        android:textStyle="italic"
-        android:textSize="16sp"
-        tools:text="Body" />
+        <TextView
+            android:id="@+id/note_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:gravity="start"
+            android:maxLines="4"
+            android:minWidth="1000dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="Body" />
 
     </LinearLayout>
 
