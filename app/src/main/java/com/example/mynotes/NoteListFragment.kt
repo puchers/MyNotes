@@ -40,7 +40,7 @@ class NoteListFragment : Fragment(), SearchView.OnQueryTextListener {
             val action =
                 NoteListFragmentDirections.actionNoteListFragmentToAddNoteFragment(it.id)
             this.findNavController().navigate(action)
-        }, viewModel.searchQuery)
+        }, viewModel)
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerView.adapter = adapter
         // Attach an observer on the allItems list to update the UI automatically when the data

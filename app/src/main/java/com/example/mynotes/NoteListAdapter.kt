@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mynotes.data.Note
 import com.example.mynotes.databinding.NoteListItemBinding
 
-class NoteListAdapter(private val onNoteClicked: (Note) -> Unit, private val searchQuery: LiveData<String>) :
+class NoteListAdapter(private val onNoteClicked: (Note) -> Unit, private val viewModel: NoteViewModel) :
     ListAdapter<Note, NoteListAdapter.NoteViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -35,7 +35,8 @@ class NoteListAdapter(private val onNoteClicked: (Note) -> Unit, private val sea
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(note: Note) {
-            val searchQuery = searchQuery
+            val searchQuery = viewModel.searchQuery
+            binding.note = note
 
             if (searchQuery.value.toString().isNotBlank()) {
                 val highlightedText = note.noteTitle.replace(searchQuery.value.toString(), "<span style=\"background:yellow\">${searchQuery.value.toString()}</span>", true)

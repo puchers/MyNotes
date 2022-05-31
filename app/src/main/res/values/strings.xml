@@ -8,6 +8,7 @@
     <string name="body">Body</string>
     <string name="notes">Notes</string>
     <string name="delete">Delete</string>
+    <string name="change_color">Change Color</string>
     <string name="delete_question">Are you sure you want to delete?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>

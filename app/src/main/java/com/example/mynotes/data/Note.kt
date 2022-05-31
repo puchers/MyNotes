@@ -1,5 +1,6 @@
 package com.example.mynotes.data
 
+import android.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,4 +13,6 @@ data class Note(
     val noteTitle: String,
     @ColumnInfo(name = "body")
     val noteBody: String,
+    @ColumnInfo(name = "color")
+    var noteColor: Int = Color.parseColor("#FF81deea")
 )

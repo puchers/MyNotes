@@ -1,10 +1,13 @@
 package com.example.mynotes
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -24,6 +27,7 @@ class AddNoteFragment : Fragment() {
     private val navigationArgs: AddNoteFragmentArgs by navArgs()
 
     lateinit var note: Note
+    private var color: Int = Color.parseColor("#FF81deea")
 
     private var _binding: FragmentAddNoteBinding? = null
     private val binding get() = _binding!!
@@ -79,6 +83,12 @@ class AddNoteFragment : Fragment() {
             noteTitle.setText(note.noteTitle, TextView.BufferType.SPANNABLE)
             noteBody.setText(note.noteBody, TextView.BufferType.SPANNABLE)
             saveAction.setOnClickListener { updateNote() }
+            root.setBackgroundColor(note.noteColor)
+            color1.setOnClickListener { note.noteColor = Color.parseColor("#FF81deea"); root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.baby_blue)) }
+            color2.setOnClickListener { note.noteColor = Color.parseColor("#AED581"); root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.light_green)) }
+            color3.setOnClickListener { note.noteColor = Color.parseColor("#FF94DA"); root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.violet)) }
+            color4.setOnClickListener { note.noteColor = Color.parseColor("#f06292"); root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red_pink)) }
+            color5.setOnClickListener { note.noteColor = Color.parseColor("#FFAB91"); root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red_orange)) }
         }
     }
 
@@ -88,6 +98,7 @@ class AddNoteFragment : Fragment() {
             viewModel.addNewNote(
                 binding.noteTitle.text.toString(),
                 binding.noteBody.text.toString(),
+                color
             )
             val action = AddNoteFragmentDirections.actionAddNoteFragmentToNoteListFragment()
             findNavController().navigate(action)
@@ -100,7 +111,8 @@ class AddNoteFragment : Fragment() {
             viewModel.updateNote(
                 this.navigationArgs.noteId,
                 this.binding.noteTitle.text.toString(),
-                this.binding.noteBody.text.toString()
+                this.binding.noteBody.text.toString(),
+                this.note.noteColor
             )
             val action = AddNoteFragmentDirections.actionAddNoteFragmentToNoteListFragment()
             findNavController().navigate(action)
@@ -138,6 +150,11 @@ class AddNoteFragment : Fragment() {
             binding.saveAction.setOnClickListener {
                 addNewNote()
             }
+            binding.color1.setOnClickListener { color = Color.parseColor("#FF81deea"); binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.baby_blue)) }
+            binding.color2.setOnClickListener { color = Color.parseColor("#AED581"); binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.light_green)) }
+            binding.color3.setOnClickListener { color = Color.parseColor("#FF94DA"); binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.violet)) }
+            binding.color4.setOnClickListener { color = Color.parseColor("#f06292"); binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red_pink)) }
+            binding.color5.setOnClickListener { color = Color.parseColor("#FFAB91"); binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red_orange)) }
         }
     }
 

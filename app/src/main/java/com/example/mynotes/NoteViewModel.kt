@@ -17,9 +17,10 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
     fun updateNote(
         noteId: Int,
         noteTitle: String,
-        noteBody: String
+        noteBody: String,
+        noteColor: Int
     ) {
-        val updatedNote = getUpdatedNoteEntry(noteId, noteTitle, noteBody)
+        val updatedNote = getUpdatedNoteEntry(noteId, noteTitle, noteBody, noteColor)
         updateNote(updatedNote)
     }
 
@@ -31,8 +32,8 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
     }
 
 
-    fun addNewNote(noteTitle: String, noteBody: String) {
-        val newNote = getNewNoteEntry(noteTitle, noteBody)
+    fun addNewNote(noteTitle: String, noteBody: String, noteColor: Int) {
+        val newNote = getNewNoteEntry(noteTitle, noteBody, noteColor)
         insertNote(newNote)
     }
 
@@ -61,22 +62,25 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
         return true
     }
 
-    private fun getNewNoteEntry(noteTitle: String, noteBody: String): Note {
+    private fun getNewNoteEntry(noteTitle: String, noteBody: String, noteColor: Int): Note {
         return Note(
             noteTitle = noteTitle,
-            noteBody = noteBody
+            noteBody = noteBody,
+            noteColor = noteColor
         )
     }
 
     private fun getUpdatedNoteEntry(
         noteId: Int,
         noteTitle: String,
-        noteBody: String
+        noteBody: String,
+        noteColor: Int
     ): Note {
         return Note(
             id = noteId,
             noteTitle = noteTitle,
-            noteBody = noteBody
+            noteBody = noteBody,
+            noteColor = noteColor
         )
     }
 
