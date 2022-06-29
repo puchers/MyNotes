@@ -7,12 +7,10 @@ import kotlinx.coroutines.launch
 
 class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
 
-
     val allNotes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
     val searchQuery: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
-
 
     fun updateNote(
         noteId: Int,
@@ -24,13 +22,11 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
         updateNote(updatedNote)
     }
 
-
     private fun updateNote(note: Note) {
         viewModelScope.launch {
             noteDao.update(note)
         }
     }
-
 
     fun addNewNote(noteTitle: String, noteBody: String, noteColor: Int) {
         val newNote = getNewNoteEntry(noteTitle, noteBody, noteColor)
@@ -43,7 +39,6 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
         }
     }
 
-
     fun deleteItem(note: Note) {
         viewModelScope.launch {
             noteDao.delete(note)
@@ -53,7 +48,6 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
     fun retrieveNote(id: Int): LiveData<Note> {
         return noteDao.getNote(id).asLiveData()
     }
-
 
     fun isEntryValid(noteTitle: String, noteBody: String): Boolean {
         if (noteTitle.isBlank() || noteBody.isBlank()) {
